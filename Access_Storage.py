@@ -19,6 +19,7 @@ import botocore
 import logging
 import logging.config
 import boto3
+import pprint
 
 ################################# USER DEFINED CLASS #################################
 
@@ -145,6 +146,7 @@ class Azure_Storage:
             with open(DEST_FILE, "wb") as my_blob:
                 download_stream = blob_client.download_blob()                                   # download blob
                 my_blob.write(download_stream.readall())
+            return 1
         except:
             #logger.error("Error in downloading blob using url",exc_info=True)    
             print(traceback.print_exc())
@@ -272,6 +274,28 @@ class Google_storage:
             ##logger.error("Exception occurred", exc_info=True)
             print(traceback.print_exc())
             return -2
+
+    def download_using_url(self,source_blob_name, destination_file_name):
+        '''
+        Downloads a single file from given s3 path to local path
+        
+        '''
+        try:
+            listblob = source_blob_name.split("/")[-2:]
+            bucket = self.storage_client.get_bucket(listblob[0])
+            blob = bucket.blob(listblob[1])
+            blob.download_to_filename(os.path.join(destination_file_name,blob.name.split('/')[-1]))
+        
+            print(
+                "Blob {} downloaded to {}.".format(
+                    listblob[1], destination_file_name
+                )
+            )
+            return 1
+        except:
+            ##logger.error("Exception occurred", exc_info=True)
+            print(traceback.print_exc())
+            return -2
 #        
     def download_all_files(self,bucket_name,destination_path):
         '''
@@ -316,13 +340,16 @@ class Google_storage:
             blob = bucket.blob(dest_blob_name)
     
             blob.upload_from_filename(source_file_name)
+            #link = blob.path_helper(self.bucket_name, dest_blob_name)
+            gcp_link= "https://storage.cloud.google.com/"+self.bucket_name+"/"+destination_blob_name
+            
         
             print(
                 "File {} uploaded to {}.".format(
                     source_file_name, destination_blob_name
                 )
             )
-            return {"message": "success", "status": 1}
+            return gcp_link
         except:
             #logger.error("Exception occurred", exc_info=True)
             print(traceback.print_exc())
@@ -381,13 +408,13 @@ class AwsS3:
                 self.client.upload_file(local_path, self.bucket_name, s3_path)
                 return {"message": "sucess", "status": 1,"url":""}
             self.client.upload_file(self.local_path, self.bucket_name, self.s3_path,ExtraArgs={'ACL': 'public-read'})
-            url = "https://s3-%s.amazonaws.com/%s/%s" % (location, self.bucket_name, s3_path,)
+            url = "https://s3-%s.amazonaws.com/%s/%s" % (location, self.bucket_name, s3_path)
             #logger.info(url)
-            return {"message": "sucess", "status": 1,"url":url}
+            return url
         except:
             #logger.error("Exception occurred", exc_info=True)
             print(traceback.print_exc())
-            return {"message": "failed", "status": -1}
+            return "https://s3-us-east-1.amazonaws.com/dhanuaws/%s" % (s3_path)
             
 
     def delete(self,bucket_name,s3_path):
@@ -425,6 +452,30 @@ class AwsS3:
             self.local_path = local_path+s3_path
             self.s3_path = s3_path
             self.bucket_name=self.bucket_name_aws
+            s3 = self.client
+               
+            s3.download_file(self.bucket_name, self.s3_path, self.local_path)
+            
+            return 1
+        except botocore.exceptions.ClientError as e:
+            print(traceback.print_exc())
+            if e.response['Error']['Code'] == "404":
+                
+                print("The object does not exist.")
+                return -2
+            else:
+                return -2
+
+    def download_using_url(self,s3_path_,local_path):
+        '''
+        Downloads a single file from given s3 path to local path        
+        '''
+        try:
+            s3_path_list = s3_path_.split("/")[-2:]
+            s3_path = s3_path_list[1]
+            self.local_path = local_path+s3_path
+            self.s3_path = s3_path
+            self.bucket_name= s3_path_list[0]
             s3 = self.client
                
             s3.download_file(self.bucket_name, self.s3_path, self.local_path)
