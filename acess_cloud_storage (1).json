@@ -1,0 +1,256 @@
+{
+  "version": 6,
+  "entities": [
+    {
+      "entity": {
+        "type": "Project",
+        "id": "837770e6-1b75-47ac-8a6b-71134b3b65e0",
+        "name": "Access_Cloud_Storage"
+      },
+      "children": [
+        {
+          "entity": {
+            "type": "Request",
+            "method": {
+              "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+              "name": "GET"
+            },
+            "body": {
+              "formBody": {
+                "overrideContentType": true,
+                "encoding": "application/x-www-form-urlencoded",
+                "items": []
+              },
+              "bodyType": "Text"
+            },
+            "uri": {
+              "query": {
+                "delimiter": "&",
+                "items": []
+              },
+              "scheme": {
+                "name": "http",
+                "version": "V11"
+              },
+              "host": "3.101.83.36",
+              "path": ""
+            },
+            "id": "b470bde4-36ae-4247-94b2-af0566f13bd3",
+            "name": "Test_API",
+            "headers": []
+          }
+        },
+        {
+          "entity": {
+            "type": "Request",
+            "method": {
+              "requestBody": true,
+              "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+              "name": "POST"
+            },
+            "body": {
+              "formBody": {
+                "overrideContentType": true,
+                "encoding": "multipart/form-data",
+                "items": [
+                  {
+                    "enabled": true,
+                    "type": "Text",
+                    "name": "storage_path",
+                    "value": "/home/ec2-user/cloud_upload_ori/downloaded_file/"
+                  },
+                  {
+                    "enabled": true,
+                    "type": "Text",
+                    "name": "blob_link",
+                    "value": "https://s3-us-east-1.amazonaws.com/dhanuaws/downloadncdknef.jpg"
+                  },
+                  {
+                    "enabled": true,
+                    "type": "Text",
+                    "name": "storage_cloud_name",
+                    "value": "aws_storage"
+                  }
+                ]
+              },
+              "bodyType": "Form"
+            },
+            "uri": {
+              "query": {
+                "delimiter": "&",
+                "items": []
+              },
+              "scheme": {
+                "name": "http",
+                "version": "V11"
+              },
+              "host": "3.101.83.36",
+              "path": "/api/download_blob_using_link"
+            },
+            "id": "6b57d687-ccd7-4a56-b66f-8eec331bbaf7",
+            "name": "download_using_link",
+            "headers": [
+              {
+                "enabled": true,
+                "name": "Content-Type",
+                "value": "multipart/form-data"
+              }
+            ]
+          }
+        },
+        {
+          "entity": {
+            "type": "Request",
+            "method": {
+              "requestBody": true,
+              "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+              "name": "POST"
+            },
+            "body": {
+              "formBody": {
+                "overrideContentType": true,
+                "encoding": "multipart/form-data",
+                "items": [
+                  {
+                    "enabled": true,
+                    "type": "Text",
+                    "name": "storage_path",
+                    "value": "/home/ec2-user/cloud_upload_ori/downloaded_file/"
+                  },
+                  {
+                    "enabled": true,
+                    "type": "Text",
+                    "name": "blob_name",
+                    "value": "downloadncdknef.jpg"
+                  },
+                  {
+                    "enabled": true,
+                    "type": "Text",
+                    "name": "storage_cloud_name",
+                    "value": "aws_storage"
+                  }
+                ]
+              },
+              "bodyType": "Form"
+            },
+            "uri": {
+              "query": {
+                "delimiter": "&",
+                "items": []
+              },
+              "scheme": {
+                "name": "http",
+                "version": "V11"
+              },
+              "host": "3.101.83.36",
+              "path": "/api/download_blob_using_name"
+            },
+            "id": "487c70d8-f7dc-4b5b-bc1c-04bb89b5fcb3",
+            "name": "download_using_name",
+            "headers": [
+              {
+                "enabled": true,
+                "name": "Content-Type",
+                "value": "multipart/form-data"
+              }
+            ]
+          }
+        },
+        {
+          "entity": {
+            "type": "Request",
+            "method": {
+              "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+              "name": "GET"
+            },
+            "body": {
+              "formBody": {
+                "overrideContentType": true,
+                "encoding": "multipart/form-data",
+                "items": [
+                  {
+                    "enabled": true,
+                    "type": "File",
+                    "name": "file"
+                  },
+                  {
+                    "enabled": true,
+                    "type": "Text",
+                    "name": "storage_cloud_name",
+                    "value": "azure_storage"
+                  }
+                ]
+              },
+              "bodyType": "Form"
+            },
+            "uri": {
+              "scheme": {
+                "secure": true,
+                "name": "https",
+                "version": "V11"
+              },
+              "host": "dhanujaexl.blob.core.windows.net",
+              "path": "/exlpoc/cat21.jpg"
+            },
+            "id": "a970f09b-2544-4ffa-b168-b8837eefbf84",
+            "name": "upload_Zip_to_cloud",
+            "headers": [
+              {
+                "enabled": true,
+                "name": "Content-Type",
+                "value": "multipart/form-data"
+              }
+            ]
+          }
+        },
+        {
+          "entity": {
+            "type": "Request",
+            "method": {
+              "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+              "name": "GET"
+            },
+            "body": {
+              "formBody": {
+                "overrideContentType": true,
+                "encoding": "multipart/form-data",
+                "items": [
+                  {
+                    "enabled": true,
+                    "type": "File",
+                    "name": "file"
+                  },
+                  {
+                    "enabled": true,
+                    "type": "Text",
+                    "name": "storage_cloud_name",
+                    "value": "aws_storage"
+                  }
+                ]
+              },
+              "bodyType": "Form"
+            },
+            "uri": {
+              "scheme": {
+                "secure": true,
+                "name": "https",
+                "version": "V11"
+              },
+              "host": "s3-us-east-1.amazonaws.com",
+              "path": "/dhanuaws/downloadncdknef.jpg"
+            },
+            "id": "3428ff5a-75b8-4bb0-83a4-fad43381932e",
+            "name": "upload_to_cloud",
+            "headers": [
+              {
+                "enabled": true,
+                "name": "Content-Type",
+                "value": "multipart/form-data"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
